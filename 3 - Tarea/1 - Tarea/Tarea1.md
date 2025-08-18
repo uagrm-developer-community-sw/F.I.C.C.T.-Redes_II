@@ -3,6 +3,8 @@
 ## Imagenes:
 ![Tarea # 1](https://github-production-user-asset-6210df.s3.amazonaws.com/36086876/479177699-0c813d58-3543-44af-82a0-ce8bde211310.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250818%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250818T184756Z&X-Amz-Expires=300&X-Amz-Signature=d9c2b6e8715dcfed2e4a288ae54c280a48b801059a67e6042656e1337f09ea33&X-Amz-SignedHeaders=host)
 
+---
+
 ![Packetracer](https://github-production-user-asset-6210df.s3.amazonaws.com/36086876/479175740-f2e5f2e6-4426-4237-8548-a912a43c6b39.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250818%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250818T184414Z&X-Amz-Expires=300&X-Amz-Signature=523470841e16c563b7a45fa3c45ec7398cf5b2ec2dade5af94f4d8518b31b48c&X-Amz-SignedHeaders=host)
 
 ## Enunciado de la tarea:
