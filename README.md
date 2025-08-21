@@ -21,7 +21,7 @@ Universidad: U.A.G.R.M. | Facultad: F.I.C.C.T. | Semestre: 2 2025 | Materia: Red
 >> [+ Tarea # 1 DISPOSITIVOS DE CAPA 2 .PDF]()<br>
 >> [+ TAREA # 2 SWITCHES ETHERNET .PDF]()<br>
 
->> [+ Tarea #3 Configuracion de VLAN .PDF]()<br>
+>> [+ Tarea #3 Configuracion de VLAN .PDF](https://github.com/uagrm-developer-community-sw/F.I.C.C.T.-Redes_II/tree/main/3%20-%20Tarea/3%20-%20Tarea)<br>
 >> [+ Tarea # 4 STP, RSTP, MSTP .PDF]()<br>
 
 > [+ Tarea 5]()<br>
@@ -30,9 +30,19 @@ Universidad: U.A.G.R.M. | Facultad: F.I.C.C.T. | Semestre: 2 2025 | Materia: Red
 ---
 
 ## VIDEOS:
+> UNIDAD 1. ROUTERS y CONMUTADORES
+>> [+ VIDEO PUENTES](https://youtu.be/XXGDw_Q-bbY)<br>
+>> [+ VIDEO TRANSPARENTES Y CONMUTADORES](https://youtu.be/cM3Uxqzt1vk)<br>
 
-> [+ ]()<br>
+>> [+ SWITCHES ETHERNET .MP4]()<br>
+>> [+ ATAQUES A SWITCHES .MP4]()<br>
+>> [+ SPANNING TREE .MP4]()<br>
+>> [+ SPANNING-2 .MP4]()<br>
+>> [+ SPANN-3]()<br>
 
+>> [+ VLAN .MP4]()<br>
+>> [+ VLAN1 .MP4]()<br>
+>> [+ VLAN2 .MP4]()<br>
 ---
 
 ## REPOSITORIO.
