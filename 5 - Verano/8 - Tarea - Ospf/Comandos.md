@@ -49,7 +49,7 @@ ip dhcp excluded-address 172.20.2.1 172.20.2.10
 
 ---
 
-Pool DHCP
+Pools DHCP
 
 ```bash
 1.2 Pool DHCP – LAN 192.168.1.0 (PC0, PC1)
@@ -143,18 +143,21 @@ Esto permite que DHCP cruce routers
 ```bash
 interface g0/0/0
  ip helper-address 192.168.1.1
+ exit
 ```
 
 > En R03 (LAN 172.20.1.0)
 ```bash
 interface g0/0/0
  ip helper-address 192.168.1.1
+ exit
 ```
 
 > En R04 (LAN 172.20.2.0)
 ```bash
 interface g0/0/0
  ip helper-address 192.168.1.1
+ exit
 ```
 
 192.168.1.1 = R01 (servidor DHCP)
