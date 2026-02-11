@@ -1,6 +1,6 @@
 # F.I.C.C.T.-Redes_II
 
-Universidad: U.A.G.R.M. | Facultad: F.I.C.C.T. | Semestre: 2 2025 | Materia: Redes II | Grupo: SC | Docente: GONZALES SANDOVAL JORGE ANTONI | Repositorio: Avance de la materia
+Universidad: U.A.G.R.M. | Facultad: F.I.C.C.T. | Verano: 3 2026 | Materia: Redes II | Grupo: SA | Docente: PAZ MENDOZA ROBERTO CARLOS | Repositorio: Avance de la materia
 
 <p align="center"><img src="https://user-images.githubusercontent.com/36086876/146686931-7454e35d-a44b-422f-84c6-c3645d235ad3.png" width="162"></p>
 <p align="center"><img src="https://user-images.githubusercontent.com/36086876/148548585-d4259cff-b909-48de-8d48-c41a7ba2cab3.png" width="292"></p>
