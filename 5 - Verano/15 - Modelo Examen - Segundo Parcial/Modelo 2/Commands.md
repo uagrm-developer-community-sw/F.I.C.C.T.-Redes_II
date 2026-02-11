@@ -1,12 +1,50 @@
-## 🔹 I. CONFIGURACIÓN EN EL SWITCH (SW01) IZQUIERDO.
+🧠 En qué orden exacto lo haríamos
+🥇 Paso 1 – VLANs en SW01
 
-Entrar al modo configuración
+VLAN 10
+
+VLAN 20
+
+🥈 Paso 2 – Puertos de acceso
+
+PC0 → VLAN 10
+
+PC1 → VLAN 20
+
+🥉 Paso 3 – Trunk SW01 ↔ R01 y R02
+
+Permitir VLAN 10 y 20
+
+🥇 Paso 4 – Subinterfaces en R01 y R02
+
+Encapsulation dot1Q
+
+IPs reales
+
+🥈 Paso 5 – HSRP
+
+Grupo 10 → VLAN 10
+
+Grupo 20 → VLAN 20
+
+Gateway virtual
+
+🥉 Paso 6 – Prueba
+
+IP manual a PC
+
+Ping al gateway virtual
+
+👉 Si esto responde, vas perfecto 💯
+
+🔹 Entrar y nombrar
 ```bash
 enable
 configure terminal
+hostname SW01
 ```
 
-Creaer Vlan:
+## 1️⃣ Crear VLANs
 ```bash
 vlan 10
  name VLAN10
@@ -21,29 +59,282 @@ vlan 30
 exit
 ```
 
-Asignar puertos a VLAN 10 (PCs)
+## 2️⃣ Asignar puertos de acceso
+
+Según el dibujo:
+
+* Fa0/1 – Fa0/5 → VLAN 10
+* Fa0/6 – Fa0/10 → VLAN 20
 ```bash
-interface range fastEthernet 0/6 - 10
+interface range fa0/6 - 10
  switchport mode access
  switchport access vlan 10
+ no shutdown
+exit
+
+interface range fa0/11 - 15
+ switchport mode access
+ switchport access vlan 20
+ no shutdown
+exit
+
+interface range fa0/16 - 20
+ switchport mode access
+ switchport access vlan 30
+ no shutdown
+exit
+```
+## 3️⃣ Configurar TRUNKS hacia los routers
+
+Puertos:
+* Gi0/1 → R01
+* Gi0/2 → R02
+
+```bash
+interface gi0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20
+ no shutdown
+exit
+
+interface gi0/2
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20
+ no shutdown
+exit
+```
+🔹 Guardar
+```bash
+end
+write memory
+```
+
+### 📌 Chequeo rápid
+```bash
+show vlan brief
+show interfaces trunk (ambos extremos tiene que estar habilitados)
+```
+
+## 🔹 PASO 2: Router R01 (ISR4331)
+
+🔹 Básico
+```bash
+enable
+configure terminal
+hostname R01
+```
+
+1️⃣ Subinterfaces
+```bash
+interface g0/0/1
+ no shutdown
+exit
+```
+
+VLAN 10
+```bash
+interface g0/0/1.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.2 255.255.255.0
+ standby 10 ip 192.168.10.1
+ standby 10 priority 110
+ standby 10 preempt
+exit
+```
+
+VLAN 20
+```bash
+interface g0/0/1.20
+ encapsulation dot1Q 20
+ ip address 192.168.20.2 255.255.255.0
+ standby 20 ip 192.168.20.1
+ standby 20 priority 110
+ standby 20 preempt
+exit
+```
+
+🔹 Guardar
+```bash
+end
+write memory
+```
+
+### 📌 Chequeo HSRP
+```bash
+show standby brief
+```
+
+## 🔹 PASO 3: Router R02 (ISR4331)
+1️⃣ Subinterfaces
+```bash
+enable
+configure terminal
+
+interface g0/0/1
+ no shutdown
+exit
+```
+
+VLAN 10
+```bash
+interface g0/0/1.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.3 255.255.255.0
+ standby 10 ip 192.168.10.1
+exit
+```
+
+VLAN 20
+```bash
+interface g0/0/1.20
+ encapsulation dot1Q 20
+ ip address 192.168.20.3 255.255.255.0
+ standby 20 ip 192.168.20.1
+exit
+```
+
+🔹 Guardar
+```bash
+end
+write memory
+```
+
+## 📌 Chequeo HSRP
+```bash
+show standby brief
+```
+Debe verse:
+* R01 → Active
+* R02 → Standby
+  
+## 🟦 4️⃣ CONFIGURACIÓN DE LAS PCs
+
+🖥 PC0 (VLAN 10 → puerto Fa0/1–Fa0/5)
+```bash
+IP Address:      192.168.10.10
+Subnet Mask:     255.255.255.0
+Default Gateway: 192.168.10.1
+DNS:             8.8.8.8
+```
+
+🖥 PC1 (VLAN 20 → puerto Fa0/6–Fa0/10)
+```bash
+IP Address:      192.168.20.10
+Subnet Mask:     255.255.255.0
+Default Gateway: 192.168.20.1
+DNS:             8.8.8.8
+```
+⚠️ Muy importante:
+PC1 debe estar conectada físicamente a Fa0/6 o superior.
+
+## 🧪 5️⃣ COMANDOS DE VERIFICACIÓN (EXAMEN)
+En SW01
+```bash
+show vlan brief
+show interfaces trunk
+```
+
+En R01 / R02
+```bash
+show ip interface brief
+show standby brief
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# SW01:
+
+Entrar al modo configuración
+```bash
+enable
+configure terminal
+```
+
+## Activar la interfaz física (OBLIGATORIO)
+```bash
+interface gigabitEthernet 0/1
+ no shutdown
+exit
+interface gigabitEthernet 0/2
+ no shutdown
+exit
+```
+
+
+## 🔹 I. CONFIGURACIÓN EN EL SWITCH (SW01) IZQUIERDO.
+
+
+
+Creaer Vlan:
+```bash
+vlan 10
+ name VLAN10
+exit
+
+vlan 20
+ name VLAN20
+exit
+```
+
+Asignar puertos a VLAN 10 (PCs)
+```bash
+interface range fastEthernet 0/1 - 5
+ switchport mode access
+ switchport access vlan 10
+ no sh
 exit
 ```
 
 Asignar puertos a VLAN 20 (PCs)
 ```bash
-interface range fastEthernet 0/11 - 15
+interface range fastEthernet 0/6 - 10
  switchport mode access
  switchport access vlan 20
+ no sh
 exit
 ```
 
-Asignar puertos a VLAN 30 (PCs)
+verificar las VLANS
 ```bash
-interface range fastEthernet 0/16 - 20
- switchport mode access
- switchport access vlan 30
-exit
+sh vlan b
 ```
+
+
 * Los puertos access solo pertenecen a UNA VLAN
 
 ---
@@ -118,45 +409,42 @@ SWML-01(config)# ip routing
 
 Creaer Vlan:
 ```bash
-vlan 10
- name VLAN10
+vlan 40
+ name VLAN40
 exit
 
-vlan 20
- name VLAN20
+vlan 50
+ name VLAN50
 exit
 
-vlan 30
- name VLAN30
+vlan 60
+ name VLAN60
 exit
 ```
 
-Asignar puertos a VLAN 10 (PCs)
+Asignar puertos a VLAN 40 (PCs)
+```bash
+interface range fastEthernet 0/1 - 5
+ switchport mode access
+ switchport access vlan 40
+exit
+```
+
+Asignar puertos a VLAN 50 (PCs)
 ```bash
 interface range fastEthernet 0/6 - 10
  switchport mode access
- switchport access vlan 10
+ switchport access vlan 50
 exit
 ```
 
-Asignar puertos a VLAN 20 (PCs)
+Asignar puertos a VLAN 60 (PCs)
 ```bash
 interface range fastEthernet 0/11 - 15
  switchport mode access
- switchport access vlan 20
+ switchport access vlan 60
 exit
 ```
-
-Asignar puertos a VLAN 30 (PCs)
-```bash
-interface range fastEthernet 0/16 - 20
- switchport mode access
- switchport access vlan 30
-exit
-```
-
-
-
 
 Configurar el puerto TRUNK hacia el router
 ```bash
@@ -592,99 +880,4 @@ write
 VERIFICACIÓN EN LOS ROUTERS
 ```bash
 show ip route
-```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-📌 RESUMEN RÁPIDO (orden correcto)
-
-1️⃣ VLANs
-2️⃣ Puertos access
-3️⃣ PortChannel
-4️⃣ Troncales
-5️⃣ Multilayer (SVI + ip routing)
-6️⃣ Router
-7️⃣ DHCP
-
-✅ PARTE 1 — SW1: Crear VLANs y asignar puertos
-
-```bash
-enable
-configure terminal
-hostname SW1
-```
-
-1) Crear las VLANs (10,20,30)
-```bash
-vlan 10
- name VLAN10
-exit
-vlan 20
- name VLAN20
-exit
-vlan 30
- name VLAN30
-exit
-```
-
-✅ Verificación:
-```bash
-do show vlan brief
-```
-
-2) Asignar puertos ACCESS a cada VLAN (según tu diagrama)
-
-En tu imagen SW1 tiene:
-* VLAN 10 → puertos 6-10
-* VLAN 20 → puertos 11-15
-* VLAN 30 → puertos 16-20
-
-VLAN 10 (Fa0/6–Fa0/10)
-```bash
-interface range fa0/6 - 10
- switchport mode access
- switchport access vlan 10
- spanning-tree portfast
-exit
-```
-
-VLAN 20 (Fa0/11–Fa0/15)
-```bash
-interface range fa0/11 - 15
- switchport mode access
- switchport access vlan 20
- spanning-tree portfast
-exit
-```
-
-VLAN 30 (Fa0/16–Fa0/20)
-```bash
-interface range fa0/16 - 20
- switchport mode access
- switchport access vlan 30
- spanning-tree portfast
-exit
-```
-
-✅ Verificación:
-```bash
-do show vlan brief
-```
-
-3) Guardar (en examen casi siempre te piden)
-```bash
-end
-write
 ```
